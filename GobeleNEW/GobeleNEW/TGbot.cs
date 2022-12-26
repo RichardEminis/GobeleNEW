@@ -30,30 +30,29 @@ namespace GobeleNEW
                 HandleErrorAsync,
                 receiverOptions,
                 cancellationToken
-            );
+            );  
+        }
 
-            public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        {
+            Console.WriteLine(update.Message.Chat.FirstName + " " + update.Message.Chat.LastName);
+            if (update.Message.Text is not null)
             {
-                Console.WriteLine(update.Message.Chat.FirstName + " " + update.Message.Chat.LastName);
-                if (update.Message.Text is not null)
+                Console.WriteLine(update.Message.Text);
+                if (update.Message.Text.ToLower() == "/start")
                 {
-                    Console.WriteLine(update.Message.Text);
-                    if (update.Message.Text.ToLower() == "/start")
-                    {
-                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Обзови меня!");
-                    }
-                    else
-                    {
-                        _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Сам ты - {update.Message.Text}");
-                    }
+                    _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Скажи что-нибудь ( ͡❛ . ͡❛)");
+                }
+                else
+                {
+                    _bot.SendTextMessageAsync(update.Message.Chat.Id, $"Я люблю {update.Message.Text}, а больше всего тебя (ɔ˘ ³(ˆ‿ˆc)");
                 }
             }
-
-            public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-            {
-
-            }
         }
-        
+
+        public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+        {
+
+        }
     }
 }
